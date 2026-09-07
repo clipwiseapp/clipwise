@@ -210,7 +210,9 @@
     .waitlist input[type="email"]::placeholder { color: var(--muted); }
     .waitlist input[type="email"]:focus { border-color: var(--orange); }
 
-    .waitlist button {
+    .waitlist button, .waitlist .cta {
+      display: inline-block;
+      text-decoration: none;
       padding: 14px 24px;
       font-family: 'Inter', sans-serif;
       font-size: 15px;
@@ -223,7 +225,7 @@
       transition: opacity 0.15s;
       white-space: nowrap;
     }
-    .waitlist button:hover { opacity: 0.85; }
+    .waitlist button:hover, .waitlist .cta:hover { opacity: 0.85; }
 
     .waitlist-note {
       margin-top: 14px;
@@ -424,11 +426,9 @@
   </p>
 
   <div class="waitlist" id="waitlist">
-    <input type="email" id="email-input" placeholder="your@email.com" autocomplete="email" aria-label="Email address" />
-    <button onclick="handleSubmit()">Get early access</button>
+    <a class="cta" href="https://github.com/saaswise-cc/clipwise">Get started on GitHub</a>
   </div>
-  <p class="waitlist-note">No spam. Early access invite when we're ready.</p>
-  <p class="success-msg" id="success-msg">✓ You're on the list. We'll be in touch.</p>
+  <p class="waitlist-note">Open source. Clone it and run it yourself.</p>
 </section>
 
 <div class="divider"></div>
@@ -507,47 +507,6 @@
   </nav>
 </footer>
 
-<script>
-  async function handleSubmit() {
-    const input = document.getElementById('email-input');
-    const success = document.getElementById('success-msg');
-    const email = input.value.trim();
-
-    if (!email || !email.includes('@')) {
-      input.focus();
-      input.style.borderColor = '#F4620A';
-      setTimeout(() => input.style.borderColor = '', 1200);
-      return;
-    }
-
-    try {
-      const res = await fetch('/api/subscribe', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) throw new Error(data.error || 'Something went wrong');
-
-      input.style.display = 'none';
-      input.nextElementSibling.style.display = 'none';
-      success.style.display = 'block';
-    } catch (err) {
-      input.style.borderColor = '#F4620A';
-      input.placeholder = err.message || 'Something went wrong, try again';
-      setTimeout(() => {
-        input.style.borderColor = '';
-        input.placeholder = 'your@email.com';
-      }, 3000);
-    }
-  }
-
-  document.getElementById('email-input').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') handleSubmit();
-  });
-</script>
 
 </body>
 </html>

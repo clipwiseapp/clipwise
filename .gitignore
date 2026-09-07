@@ -7,3 +7,9 @@ recorder/diagnostics/audioinuse
 # Built on demand by menubarwatch.sh, same as audioinuse above.
 recorder/diagnostics/menubarscan
 recorder/micwatch
+
+# Local secrets and OS cruft — never commit these to a public repo
+.env
+.env.*
+!.env.example
+.DS_Store
