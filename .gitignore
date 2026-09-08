@@ -13,3 +13,6 @@ recorder/micwatch
 .env.*
 !.env.example
 .DS_Store
+
+# Local Claude Code session state
+.claude/
